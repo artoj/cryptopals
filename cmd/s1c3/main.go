@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/artoj/cryptopals/internal/pkg/utilities"
+	"github.com/artoj/cryptopals/internal/pkg/utils"
 )
 
 // relative letter frequencies in the English alphabet with some made-up weights
@@ -35,7 +35,7 @@ var weights = map[byte]int{
 func weight(b byte) int {
 	w, ok := weights[b]
 	if !ok {
-		if !utilities.IsPrintable(b) {
+		if !utils.IsPrintable(b) {
 			return -100
 		} else {
 			return 0

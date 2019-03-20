@@ -7,7 +7,7 @@ import (
 	"io/ioutil"
 	"log"
 
-	"github.com/artoj/cryptopals/internal/pkg/utilities"
+	"github.com/artoj/cryptopals/internal/pkg/utils"
 )
 
 const InFile = "4.txt"
@@ -39,7 +39,7 @@ var weights = map[byte]int{
 func weight(b byte) int {
 	w, ok := weights[b]
 	if !ok {
-		if !utilities.IsPrintable(b) {
+		if !utils.IsPrintable(b) {
 			return -100
 		} else {
 			return 0

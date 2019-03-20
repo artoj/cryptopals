@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/artoj/cryptopals/internal/pkg/utilities"
+	"github.com/artoj/cryptopals/internal/pkg/utils"
 )
 
 const (
@@ -12,5 +12,5 @@ const (
 )
 
 func main() {
-	fmt.Printf("%x\n", utilities.RepeatedKeyXor([]byte(key), []byte(p)))
+	fmt.Printf("%x\n", utils.RepeatedKeyXor([]byte(key), []byte(p)))
 }

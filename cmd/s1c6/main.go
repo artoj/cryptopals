@@ -7,7 +7,7 @@ import (
 	"log"
 	"sort"
 
-	"github.com/artoj/cryptopals/internal/pkg/utilities"
+	"github.com/artoj/cryptopals/internal/pkg/utils"
 )
 
 const (
@@ -47,7 +47,7 @@ func calcDistances(c []byte) []KeySizeDistance {
 
 		var totalDist int
 		for i := 0; i < len(blocks)-1; i++ {
-			dist, err := utilities.HammingDistance(blocks[i], blocks[i+1])
+			dist, err := utils.HammingDistance(blocks[i], blocks[i+1])
 			if err != nil {
 				log.Fatal(err)
 			}
@@ -86,7 +86,7 @@ var weights = map[byte]int{
 func weight(b byte) int {
 	w, ok := weights[b]
 	if !ok {
-		if !utilities.IsPrintable(b) {
+		if !utils.IsPrintable(b) {
 			return -100
 		}
 		return -1
@@ -106,7 +106,7 @@ func totalWeight(b []byte) int {
 func solveBlock(c []byte) byte {
 	var keyWeights []KeyWeight
 	for k := byte(0x20); k < 0x7f; k++ {
-		xorred := utilities.RepeatedKeyXor([]byte{k}, c)
+		xorred := utils.RepeatedKeyXor([]byte{k}, c)
 		weight := totalWeight(xorred)
 
 		keyWeights = append(keyWeights, KeyWeight{k, weight})
@@ -132,13 +132,13 @@ func main() {
 	sort.Sort(byHammingDistance(distances))
 	for _, keySizeDistance := range distances[:5] {
 		var key []byte
-		split := utilities.Split(c, keySizeDistance.KeySize)
-		transposed := utilities.Transpose(split)
+		split := utils.Split(c, keySizeDistance.KeySize)
+		transposed := utils.Transpose(split)
 
 		for _, block := range transposed {
 			key = append(key, solveBlock(block))
 		}
 
-		fmt.Printf("key: '%s'\tplain: %q\n", key, utilities.RepeatedKeyXor(key, c)[0:100])
+		fmt.Printf("key: '%s'\tplain: %q\n", key, utils.RepeatedKeyXor(key, c)[0:100])
 	}
 }
