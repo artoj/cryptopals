@@ -15,31 +15,31 @@ const (
 	maxKeySize = 40
 )
 
-// KeySizeDistance is a key size - hamming distance pair
-type KeySizeDistance struct {
+// keySizeDistance is a key size - hamming distance pair
+type keySizeDistance struct {
 	KeySize, Distance int
 }
 
-type byHammingDistance []KeySizeDistance
+type byHammingDistance []keySizeDistance
 
 func (k byHammingDistance) Len() int           { return len(k) }
 func (k byHammingDistance) Swap(i, j int)      { k[i], k[j] = k[j], k[i] }
 func (k byHammingDistance) Less(i, j int) bool { return k[i].Distance < k[j].Distance }
 
-// KeyWeight is a byte key - word frequency weight pair
-type KeyWeight struct {
+// keyWeight is a byte key - word frequency weight pair
+type keyWeight struct {
 	Key    byte
 	Weight int
 }
 
-type byWeight []KeyWeight
+type byWeight []keyWeight
 
 func (k byWeight) Len() int           { return len(k) }
 func (k byWeight) Swap(i, j int)      { k[i], k[j] = k[j], k[i] }
 func (k byWeight) Less(i, j int) bool { return k[i].Weight < k[j].Weight }
 
-func calcDistances(c []byte) []KeySizeDistance {
-	var distances []KeySizeDistance
+func calcDistances(c []byte) []keySizeDistance {
+	var distances []keySizeDistance
 
 	for i := 2; i <= maxKeySize; i++ {
 
@@ -53,7 +53,7 @@ func calcDistances(c []byte) []KeySizeDistance {
 			}
 			totalDist += dist
 		}
-		distances = append(distances, KeySizeDistance{i, totalDist / i})
+		distances = append(distances, keySizeDistance{i, totalDist / i})
 	}
 
 	return distances
@@ -104,12 +104,12 @@ func totalWeight(b []byte) int {
 
 // Solves a single key XOR encryption in c
 func solveBlock(c []byte) byte {
-	var keyWeights []KeyWeight
+	var keyWeights []keyWeight
 	for k := byte(0x20); k < 0x7f; k++ {
 		xorred := utils.RepeatedKeyXor([]byte{k}, c)
 		weight := totalWeight(xorred)
 
-		keyWeights = append(keyWeights, KeyWeight{k, weight})
+		keyWeights = append(keyWeights, keyWeight{k, weight})
 	}
 
 	// Largest weights first
