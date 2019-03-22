@@ -5,7 +5,7 @@ import (
 	"math/bits"
 )
 
-// Transpose transposes the blocks slice
+// Transpose performs a matrix transpose operation on blocks.
 func Transpose(blocks [][]byte) [][]byte {
 	result := make([][]byte, len(blocks[0]))
 	for i := 0; i < len(blocks); i++ {
@@ -16,7 +16,7 @@ func Transpose(blocks [][]byte) [][]byte {
 	return result
 }
 
-// ZeroPad pads the input c with zeroes to blockSize length of slice
+// ZeroPad pads the input c with zeroes to blockSize length of slice.
 func ZeroPad(c []byte, blockSize int) []byte {
 	if len(c) == blockSize {
 		return c
@@ -49,7 +49,7 @@ func Split(c []byte, blockSize int) [][]byte {
 	return blocks
 }
 
-// IsPrintable returns true if b is a printable character or false otherwise
+// IsPrintable returns a boolean value whether b is an ASCII printable character or not.
 func IsPrintable(b byte) bool {
 	if b >= 0x20 && b <= 0x7e {
 		return true
