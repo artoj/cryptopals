@@ -56,7 +56,7 @@ func TestZeroPad(t *testing.T) {
 	for _, table := range tables {
 		padded := ZeroPad(table.input, table.blocksize)
 		if !isEqual(padded, table.expected) {
-			t.Errorf("ZeroPad of (\"%s\", %d) was incorrect, got: %q, want: %q", table.input, table.blocksize, padded, table.expected)
+			t.Errorf("ZeroPad(%q, %d) = %q; want: %q", table.input, table.blocksize, padded, table.expected)
 		}
 	}
 }
@@ -64,7 +64,7 @@ func TestZeroPad(t *testing.T) {
 func TestHammingDistance(t *testing.T) {
 	dist, err := HammingDistance([]byte("this is a test"), []byte("wokka wokka!!!"))
 	if err != nil {
-		t.Error("Hamming distance calculation failed")
+		t.Fatal("Hamming distance calculation failed")
 	}
 	// the value "37" was given as correct distance in set #1 exercise #6
 	if dist != 37 {
