@@ -3,6 +3,8 @@ package utils
 import (
 	"fmt"
 	"math/bits"
+
+	"github.com/artoj/cryptopals/internal/pkg/pad"
 )
 
 // Transpose performs a matrix transpose operation on blocks.
@@ -16,32 +18,12 @@ func Transpose(blocks [][]byte) [][]byte {
 	return result
 }
 
-// ZeroPad pads the input c with zeroes to blockSize length of slice.
-func ZeroPad(c []byte, blockSize int) []byte {
-	if len(c) == blockSize {
-		return c
-	}
-
-	var padded []byte
-	if len(c) < blockSize {
-		padded = make([]byte, blockSize)
-	} else {
-		size := len(c) / blockSize * blockSize
-		if len(c)%blockSize != 0 {
-			size += blockSize
-		}
-		padded = make([]byte, size)
-	}
-	copy(padded, c)
-	return padded
-}
-
 // Split splits the input c in to blockSize length slices.
 // Input is automatically zero padded.
 func Split(c []byte, blockSize int) [][]byte {
 	var blocks [][]byte
 
-	padded := ZeroPad(c, blockSize)
+	padded := pad.ZeroPad(c, blockSize)
 
 	for i := 0; i < len(padded); i += blockSize {
 		blocks = append(blocks, padded[i:i+blockSize])

@@ -1,25 +1,16 @@
 package utils
 
-import "testing"
-
-func isEqual(a, b []byte) bool {
-	if len(a) != len(b) {
-		return false
-	}
-	for i, v := range a {
-		if b[i] != v {
-			return false
-		}
-	}
-	return true
-}
+import (
+	"bytes"
+	"testing"
+)
 
 func isEqualMulti(a, b [][]byte) bool {
 	if len(a) != len(b) {
 		return false
 	}
 	for i, v := range a {
-		if !isEqual(b[i], v) {
+		if !bytes.Equal(b[i], v) {
 			return false
 		}
 	}
@@ -37,26 +28,6 @@ func TestTranspose(t *testing.T) {
 		transposed := Transpose(table.input)
 		if !isEqualMulti(transposed, table.expected) {
 			t.Errorf("Transpose of %v was incorrect, got: %v, want: %v", table.input, transposed, table.expected)
-		}
-	}
-}
-
-func TestZeroPad(t *testing.T) {
-	tables := []struct {
-		input     []byte
-		blocksize int
-		expected  []byte
-	}{
-		{[]byte("This is a test ab"), 8, []byte("This is a test ab\x00\x00\x00\x00\x00\x00\x00")},
-		{[]byte("This is a test 1"), 8, []byte("This is a test 1")},
-		{[]byte("This is a test"), 8, []byte("This is a test\x00\x00")},
-		{[]byte("abcdefgh"), 8, []byte("abcdefgh")},
-		{[]byte("abc"), 8, []byte("abc\x00\x00\x00\x00\x00")},
-	}
-	for _, table := range tables {
-		padded := ZeroPad(table.input, table.blocksize)
-		if !isEqual(padded, table.expected) {
-			t.Errorf("ZeroPad(%q, %d) = %q; want: %q", table.input, table.blocksize, padded, table.expected)
 		}
 	}
 }
