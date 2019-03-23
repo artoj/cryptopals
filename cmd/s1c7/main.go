@@ -7,7 +7,7 @@ import (
 	"io/ioutil"
 	"log"
 
-	"github.com/artoj/cryptopals/internal/pkg/ecb"
+	"github.com/artoj/cryptopals/internal/pkg/mode"
 )
 
 const (
@@ -31,7 +31,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	aesECB := ecb.NewECBDecrypter(aesCipher)
+	aesECB := mode.NewECBDecrypter(aesCipher)
 	aesECB.CryptBlocks(c, c)
 	fmt.Println(string(c))
 }

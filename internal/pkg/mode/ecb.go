@@ -1,6 +1,6 @@
 // Electronic code book (ECB) mode.
 
-package ecb
+package mode
 
 import (
 	"crypto/cipher"
